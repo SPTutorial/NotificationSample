@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:NotificationSample"
+             x:Class="NotificationSample.MainPage">
+
+    <StackLayout Padding="10">
+        <Entry Placeholder="Message" x:Name="message" HorizontalOptions="FillAndExpand"/>
+        <Button Text="Send Notification" Clicked="SendNotification"/>
+    </StackLayout>
+
+</ContentPage>
