@@ -32,12 +32,16 @@ namespace NotificationSample.Droid
         {
             try
             {
+                var intent = new Intent(mContext, typeof(MainActivity));
+                intent.AddFlags(ActivityFlags.ClearTop);
+                intent.PutExtra(title, message);
+                var pendingIntent = PendingIntent.GetActivity(mContext, 0, intent, PendingIntentFlags.OneShot);
+
                 var sound = global::Android.Net.Uri.Parse(ContentResolver.SchemeAndroidResource + "://" + mContext.PackageName + "/" + Resource.Raw.notification);
                 // Creating an Audio Attribute
                 var alarmAttributes = new AudioAttributes.Builder()
                     .SetContentType(AudioContentType.Sonification)
                     .SetUsage(AudioUsageKind.Notification).Build();
-
 
                 mBuilder = new NotificationCompat.Builder(mContext);
                 mBuilder.SetSmallIcon(Resource.Drawable.icon);
@@ -51,7 +55,9 @@ namespace NotificationSample.Droid
                         .SetVibrate(new long[0])
                         .SetDefaults((int)NotificationDefaults.Sound | (int)NotificationDefaults.Vibrate)
                         .SetVisibility((int)NotificationVisibility.Public)
-                        .SetSmallIcon(Resource.Drawable.icon);
+                        .SetSmallIcon(Resource.Drawable.icon)
+                        .SetContentIntent(pendingIntent);
+                        
 
 
                 NotificationManager notificationManager = mContext.GetSystemService(Context.NotificationService) as NotificationManager;

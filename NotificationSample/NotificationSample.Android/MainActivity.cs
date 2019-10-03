@@ -8,6 +8,8 @@ using Android.Widget;
 using Android.OS;
 using Xamarin.Forms.Platform.Android;
 using Android.Gms.Common;
+using Android.Content;
+using Xamarin.Forms;
 
 namespace NotificationSample.Droid
 {
@@ -18,10 +20,15 @@ namespace NotificationSample.Droid
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
-
             base.OnCreate(savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            LoadApplication(new App());
+            bool flag = false;
+            if(Intent.Extras !=null)
+            {
+                flag = true;
+            }
+       
+            LoadApplication(new App(flag));
             IsPlayServicesAvailable();
         }
         public bool IsPlayServicesAvailable()
@@ -29,6 +36,7 @@ namespace NotificationSample.Droid
             int resultCode = GoogleApiAvailability.Instance.IsGooglePlayServicesAvailable(this);
             if (resultCode != ConnectionResult.Success)
             {
+
                 if (GoogleApiAvailability.Instance.IsUserResolvableError(resultCode))
                 {
                     //msgText.Text = GoogleApiAvailability.Instance.GetErrorString(resultCode);
